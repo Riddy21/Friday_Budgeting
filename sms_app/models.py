@@ -195,7 +195,6 @@ class User(models.Model):
         categories.append(BudgetCategory(category_name="Supplies"))
         categories.append(BudgetCategory(category_name="Clothing"))
         categories.append(BudgetCategory(category_name="Health"))
-        categories.append(BudgetCategory(category_name="Emergencies"))
 
         for item in categories:
             item.save()

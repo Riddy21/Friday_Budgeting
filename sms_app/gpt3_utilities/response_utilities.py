@@ -91,7 +91,7 @@ The AI assistant has the functionality to help %s with these actions:
     prompt += 'Friday:'
 
     response = openai.Completion.create(
-        engine="text-davinci-001",
+        engine="text-davinci-002",
         prompt=prompt,
         temperature=0.6,
         max_tokens=132,
@@ -141,7 +141,7 @@ The AI assistant has the functionality to help %s with these actions:
 
     # Send to API
     response_dict = openai.Completion.create(
-        engine="text-davinci-001",
+        engine="text-davinci-002",
         prompt=prompt,
         temperature=1.0,
         max_tokens=500,
@@ -225,7 +225,7 @@ Output:
 """ % (user, user, budget_dict, msg)
 
     response = openai.Completion.create(
-        engine="text-davinci-001",
+        engine="text-davinci-002",
         prompt=prompt,
         temperature=0,
         max_tokens=296,
@@ -378,7 +378,7 @@ AI: I can do that for you! Can you tell me a little more about what you would li
     LOGGER.info(prompt)
 
     response = openai.Completion.create(
-        engine="text-davinci-001",
+        engine="text-davinci-002",
         prompt=prompt,
         temperature=0.6,
         max_tokens=132,
@@ -558,7 +558,7 @@ Conversation
 
     LOGGER.info(prompt)
     response = openai.Completion.create(
-        engine="text-davinci-001",
+        engine="text-davinci-002",
         prompt=prompt,
         temperature=0.5,
         max_tokens=200,
@@ -607,7 +607,7 @@ Name:
 """ % msg
 
     response = openai.Completion.create(
-        engine="text-davinci-001",
+        engine="text-davinci-002",
         prompt=prompt,
         temperature=0,
         max_tokens=10,
