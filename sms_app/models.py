@@ -30,13 +30,15 @@ class Transaction(models.Model):
         else:
             title = '%s @ %s' % (item, location)
 
-        date = datetime.datetime.strptime(timestamp, '%m-%d-%Y')
-        if timestamp == '?':
+        try:
+            date = datetime.datetime.strptime(timestamp, '%m-%d-%Y')
+
+            if date.date() == datetime.date.today():
+                timestamp = datetime.datetime.now()
+            else:
+                timestamp = datetime.datetime(date.year, date.month, date.day)
+        except:
             timestamp = datetime.datetime.now()
-        elif date.date() == datetime.date.today():
-            timestamp = datetime.datetime.now()
-        else:
-            timestamp = datetime.datetime(date.year, date.month, date.day)
 
         transaction = Transaction(phone_number=phone_number,
                                   title=title,
@@ -190,11 +192,9 @@ class User(models.Model):
         categories.append(BudgetCategory(category_name="Transportation"))
         categories.append(BudgetCategory(category_name="Food"))
         categories.append(BudgetCategory(category_name="Entertainment"))
-        categories.append(BudgetCategory(category_name="Household"))
-        categories.append(BudgetCategory(category_name="Health"))
+        categories.append(BudgetCategory(category_name="Supplies"))
         categories.append(BudgetCategory(category_name="Clothing"))
-        categories.append(BudgetCategory(category_name="Gifts"))
-        categories.append(BudgetCategory(category_name="Education"))
+        categories.append(BudgetCategory(category_name="Health"))
         categories.append(BudgetCategory(category_name="Emergencies"))
 
         for item in categories:

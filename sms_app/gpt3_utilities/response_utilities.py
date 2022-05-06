@@ -243,39 +243,53 @@ Output:
 # Transaction functions
 ######################
 def determine_transaction_info(text):
-    date = datetime.date.today()
+    today = datetime.date.today()
+    yesterday = today - datetime.timedelta(days=1)
+    three_days_ago = today - datetime.timedelta(days=3)
+    a_week_ago = today - datetime.timedelta(days=7)
     prompt = \
         """A classifier that can indicate the item, location, date, and amount for a transaction in a list format. If you 
     don't know what the value for a category is, simple use '?' as it's value. Program should return a list 
-    containing a dictionary for each transaction. The program should be able to determine the date relative to today from a sentence, if date is unknown use "?".
+    containing a dictionary for each transaction. The program should be able to determine the date relative to today from a sentence.
     today is %s-%s-%s
 
 Sentence: Hey Joe, I bought some band-aids at shoppers today for 10 bucks. I also bought 50 k worth of chicken wings 
 at Kentucky fried chicken. 
-List: [{'Item': 'Band-aids', 'Amount': 10, 'Location': 'Shoppers', 'Date' : '01-23-2022'}, {'Item': 'Chicken Wings', 'Amount': 50000, 'Location': 'Kentucky fried 
-chicken', 'Date' : '01-23-2022'}] 
+List: [{'Item': 'Band-aids', 'Amount': 10, 'Location': 'Shoppers', 'Date' : '%s-%s-%s'}, {'Item': 'Chicken Wings', 'Amount': 50000, 'Location': 'Kentucky fried 
+chicken', 'Date' : '%s-%s-%s'}] 
 
 Sentence: Yo, I spend 40 dollars at McDonalds today on a Big Mac then I went to no frills for some bananas, 
 it costed 10 bucks 
-List: [{'Item': 'Big Mac', 'Amount': 40, 'Location': 'McDonalds', 'Date' : '01-23-2022'}, {'Item': 'Bananas', 'Amount': 10, 'Location': 'No frills', 'Date' : '01-23-2022'}]
+List: [{'Item': 'Big Mac', 'Amount': 40, 'Location': 'McDonalds', 'Date' : '%s-%s-%s'}, {'Item': 'Bananas', 'Amount': 10, 'Location': 'No frills', 'Date' : '%s-%s-%s'}]
 
 Sentence: yesterday I bought a new pair of shoes at shoppers for 20 bucks. 
-List: [{'Item': 'Shoes', 'Amount': 20, 'Location': 'Shoppers', 'Date' : '01-22-2022'}]
+List: [{'Item': 'Shoes', 'Amount': 20, 'Location': 'Shoppers', 'Date' : '%s-%s-%s'}]
 
 Sentence: Dude, I dropped 20 k on a new iPad today it was so expensive and bro I got shopping today and got some groceries at Sobeys for like 30 bucks oh and the iPad was from Apple yeah and uh yesterday I bought this new app on steam it was like this indie game and it was really fun to play its called apex legends or something but this one was no biggie only like 23 or something 
-List: [{'Item': 'iPad', 'Amount': 20000, 'Location': 'Apple', 'Date' : '01-23-2022'}, {'Item': 'Groceries', 'Amount': 30, 'Location': 'Sobeys', 'Date' : '01-23-2022'}, {'Item': 'Apex Legends', 'Amount': 23, 'Location': 'Steam', 'Date' : '01-22-2022'}] 
+List: [{'Item': 'iPad', 'Amount': 20000, 'Location': 'Apple', 'Date' : '%s-%s-%s'}, {'Item': 'Groceries', 'Amount': 30, 'Location': 'Sobeys', 'Date' : '%s-%s-%s'}, {'Item': 'Apex Legends', 'Amount': 23, 'Location': 'Steam', 'Date' : '%s-%s-%s'}] 
 
 Sentence: I bought a burger at McDonalds 3 days ago
-List: [{'Item': 'Burger', 'Amount': '?', 'Location': 'McDonalds', 'Date' : '01-20-2022'}]
+List: [{'Item': 'Burger', 'Amount': '?', 'Location': 'McDonalds', 'Date' : '%s-%s-%s'}]
 
 Sentence: I bought a shirt for $15 at Walmart a week ago.
-List: [{'Item': 'Shirt', 'Amount': 15, 'Location': 'Walmart', 'Date' : '01-15-2022'}]
+List: [{'Item': 'Shirt', 'Amount': 15, 'Location': 'Walmart', 'Date' : '%s-%s-%s'}]
 
 Sentence: %s
 List:
-    """ % (date.month, date.day, date.year, text)
+    """ % (today.month, today.day, today.year,
+           today.month, today.day, today.year,
+           today.month, today.day, today.year,
+           today.month, today.day, today.year,
+           today.month, today.day, today.year,
+           yesterday.month, yesterday.day, yesterday.year,
+           today.month, today.day, today.year,
+           today.month, today.day, today.year,
+           yesterday.month, yesterday.day, yesterday.year,
+           three_days_ago.month, three_days_ago.day, three_days_ago.year,
+           a_week_ago.month, a_week_ago.day, a_week_ago.year,
+           text)
     response = openai.Completion.create(
-        engine="text-davinci-001",
+        engine="text-davinci-002",
         prompt=prompt,
         temperature=0,
         max_tokens=300,
@@ -285,6 +299,7 @@ List:
         stop='Sentence:'
     )
     try:
+        print(response.choices[0].text.strip())
         transactionList = ast.literal_eval(response.choices[0].text.strip())
         return transactionList
     except:
