@@ -70,7 +70,6 @@ class NLP_Manager(object):
         # Add the user msg to conversation hist
         self.user.add_conversation_msg(received_msg, self.user.name)
 
-        LOGGER.info(received_msg)
         # A classification function that determines the user state
         self.user.state = gpt3.determine_conversation_category(received_msg)
 
@@ -208,7 +207,8 @@ class NLP_Manager(object):
             # Determine Bad transactions
             if (item == '?' and location == '?') or amount == '?':
                 reply = "Your transaction was not very clear... please tell me where you spent your money and how much."
-                return reply
+                return reply, 0
+
 
             transaction_obj = Transaction.make_transaction(self.user.phone_number,
                                                            item, category_type, amount,

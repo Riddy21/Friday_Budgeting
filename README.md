@@ -1,7 +1,6 @@
 # Friday_Budgeting - MacHacks 2022 Winner
 ![ezgif-5-5334bd9a1f](https://user-images.githubusercontent.com/34573516/150804207-cabf87ca-07b4-4b52-afa2-7e1e022450c0.gif)
 
-# What it does...
 Meet Friday, your personal finance guru who helps you meet your money goals and have fun doing it. Friday is a next generation AI powered assistant who helps you achieve financial freedom. No more complex UIs or crowding notifications. Tracking expenses have never been easier. Just text Friday like you would a friend, telling her what you spent and where and she’ll do the rest. She can understand everything - just try it yourself! Text +1 (940) 260-3468
 
 If you need some motivation or inspiration, Friday’s got you. She’ll remember your past conversations and keep you on track using personalized tips. The conversation based support helps you learn how to meet long term financial goals. Empowering and Engaging Intuitive and Easily Accessible Adaptive and Helpful

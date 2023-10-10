@@ -51,12 +51,15 @@ def process_msg(received_msg, phone_num):
     # Initiate nlp manager with the user
     nlp_manager = NLP_Manager(user)
 
+    LOGGER.info(received_msg)
+
     nlp_manager.process_message(received_msg)
 
     reply_queue = nlp_manager.get_response()
 
     for msg_type, reply in reply_queue:
         if msg_type == NLP_Manager.MESSAGE:
+            LOGGER.info(reply)
             send_msg(reply, phone_num)
         elif msg_type == NLP_Manager.MEDIA:
             #TODO: send media
